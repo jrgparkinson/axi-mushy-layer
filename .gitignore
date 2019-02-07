@@ -1,0 +1,4 @@
+*.mat
+*.fig
+**/initial_data*/*
+**/data/*
