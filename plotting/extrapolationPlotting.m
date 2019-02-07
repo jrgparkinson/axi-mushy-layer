@@ -1,5 +1,4 @@
 vars = 'Rm40H0.5R0.4a0.04b0.05';
-title_vars = 
 load(strcat('steadyState',vars,'.mat'));
 
 
