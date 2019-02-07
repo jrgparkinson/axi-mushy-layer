@@ -1,0 +1,373 @@
+\documentclass{article}
+\usepackage[margin=0.2in]{geometry}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{verbatim}
+
+
+\usepackage{graphicx}
+\usepackage{epstopdf}
+
+\begin{document}
+\section{Cartesian notes}
+
+
+\subsection{Two dimensional cartesian stream function}
+We wish to simplify
+\begin{equation}
+\mathbf{u}' = A \left( -\nabla'P' + T'\mathbf{\hat{z}} \right)
+\end{equation}
+The equation $\nabla \cdot \mathbf{u}' = 0$ is immediately satisfied by introducing $\mathbf{u}' = ( \frac{\partial \psi}{\partial z}, -\frac{\partial \psi}{\partial x})$, so we substitute this in and take the curl.
+\begin{eqnarray*}
+\nabla \times \mathbf{u}' &=& A \left( 0 + - T' \nabla \times \hat{z} \right)\\
+\end{eqnarray*}
+Leaving
+\begin{eqnarray*}
+\nabla^2 \psi &=& - A \frac{\partial T'}{\partial x'} \\
+\end{eqnarray*}
+
+\subsection{Two dimensional axisymmetric stream function}
+\label{sec:axi-streamfunction}
+In axisymmetric flow $\mathbf{u}(r, \theta, z)$ there is no $u_\theta$ component and none of the other components depend on $\theta$. Therefore 
+\begin{equation}
+\nabla \cdot \mathbf{u} = \frac{1}{r} \frac{ \partial (r u_r) }{\partial r} + \frac{u_z}{z}
+\end{equation}
+which is satisfied by 
+\begin{equation}
+u_r = - \frac{1}{r} \frac{\partial \psi}{\partial z} \hspace{10ex} u_z = \frac{1}{r} \frac{\partial \psi}{\partial r} \label{eq:axi-streamfunction}
+\end{equation}
+Where $\psi$ is known as the Stokes streamfunction
+
+\newpage
+\section{Solving poisson's equation}
+Poisson's equation 
+\begin{equation}
+\nabla^2 \psi = - f(x,y)
+\end{equation}
+Can be discretized and solved by successive over-relaxation (SOR) using the iterative formula
+\begin{equation}
+\psi^{n+1}_{i,j} = (1-w) \psi^n_{i,j} + \frac{w}{4} \left(\psi^n_{i-1,j}  + \psi^n_{i+1,j}  + \psi^n_{i,j-1}  + \psi^n_{i,j+1} + f_{i,j} \right)
+\end{equation}
+We wish to solve for $0<x<1, 0<y<1$ with the boundary conditions
+\begin{eqnarray}
+\psi(0, y) = 0 \hspace{10ex}  \psi(1, y) = 0 \hspace{10ex} \psi(x, 0) = 0 \hspace{10ex} \psi(x, 1) = \sin(\pi x)
+\end{eqnarray}
+and 
+\begin{equation}
+f(x, y) = \beta( y(1-y) + x(1-x) )
+\end{equation}
+The analytic solution in this case is
+\begin{equation}
+\psi (x,y) = \sin(\pi x) \frac{\sinh(\pi y)}{\sinh(\pi)} + \frac{1}{2} \beta y(1-y)x(1-x)
+\end{equation}
+where we set $\beta  = 10$ so that the forcing function has a noticable effect.
+\newpage
+\subsection{Results}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=3.0in]{poisson-numeric}
+    \includegraphics[width=3.0in]{poisson-analytic}
+     \includegraphics[width=3.0in]{poisson-difference}
+     \caption{}
+ \end{figure}
+ \begin{figure}[h]
+    \centering
+    \includegraphics[width=3.0in]{poisson-error-per-dx}
+     \includegraphics[width=3.0in]{poisson-log-error-per-dx}
+     \caption{}
+ \end{figure}
+ 
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%                                                                     %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%          Coupled heat and momentum             %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%                                                                     %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Coupled heat and momentum equations}
+Following the discussion in Nield and Bejan (2006) chapter 5, we start with
+\begin{eqnarray}
+\frac{\partial u}{\partial x} + \frac{\partial v}{\partial y} = 0 \\
+\mathbf{u} = - \frac{K}{\mu} \left[\nabla P' - \rho g \mathbf{\hat{x}} \beta (T-T_\infty) \right] \\
+\frac{\partial P'}{\partial y} = 0 \\
+\sigma \frac{\partial T}{\partial t} + u \frac{\partial T}{\partial x} + v \frac{\partial T}{\partial y} = \alpha_m \left( \frac{\partial^2 T}{\partial^2 y} + \frac{\partial^2 T}{\partial^2 x} \right)
+\end{eqnarray}
+introducing the streamfunction $\psi$ with
+\begin{eqnarray}
+u = \frac{\partial \psi}{\partial y} \hspace{10ex} v = - \frac{\partial \psi}{\partial x}
+\end{eqnarray}
+we can reduce these four equations to
+\begin{eqnarray}
+\frac{\partial^2 \psi}{\partial x^2} + \frac{\partial^2 \psi}{\partial y^2} &=& \frac{g \beta K}{\nu} \frac{\partial T}{\partial y} \\
+\frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2} &=& \frac{1}{\alpha_m} \left( \sigma \frac{\partial T}{\partial t} + \frac{\partial \psi}{\partial y} \frac{\partial T}{\partial x} - \frac{\partial \psi}{\partial x} \frac{\partial T}{\partial y} \right)
+\end{eqnarray}
+\subsection{Discretization and iteration}
+We start at $t=0$, with known initial and boundary temperatures.
+At each timestep, $n$, the first equation is solved iteratively using SOR:
+\begin{eqnarray}
+\psi^{n}_{i,j} = (1-w) \psi^{n-\frac{1}{2}}_{i,j} + \frac{w}{2 ( (\Delta x)^2 + (\Delta y)^2)} \left[ (\Delta y)^2 (\psi^{n-\frac{1}{2}}_{i-1,j}  + \psi^{n-\frac{1}{2}}_{i+1,j})  + (\Delta x^2) (\psi^{n-\frac{1}{2}}_{i,j-1}  + \psi^{n-\frac{1}{2}}_{i,j+1}) - (\Delta x)^2 (\Delta y)^2 f_{i,j} \right]
+\end{eqnarray}
+where
+\begin{equation}
+f_{i,j} =  \frac{g \beta K}{\nu} \frac{T^{n-\frac{1}{2}}_{i,j+1} - T^{n-\frac{1}{2}}_{i, j-1}}{2 \delta y}
+\end{equation}
+We will then calculate $T^{n+1/2}$ from the second equation using $\psi^n$ and a timestep of $dt/2$ in the Alternating Direction Implicit (ADI) scheme. \\
+The equation is discretized by
+\begin{equation}
+\frac{T^{n+1/2} - T^n}{\Delta t / 2} = \frac{1}{2 \sigma} \left (
+ -\frac{\partial \psi^n}{\partial y} \frac{\partial}{\partial x} 
++ \frac{\partial \psi^n}{\partial x} \frac{\partial}{\partial y} 
++  \alpha_m \frac{\partial^2}{\partial x^2} 
++ \alpha_m \frac{\partial^2}{\partial y^2}
+\right) (T^{n+1/2} + T^n)
+\end{equation}
+This is then split into two separate equations, each implicit in one direction and explicit in the other
+\begin{eqnarray}
+\frac{T^{n+1/4} - T^n}{\Delta t/4} &=&
+\frac{1}{2 \sigma} \left (
+ -\frac{\partial \psi^{n+1/4}}{\partial y} \frac{\partial}{\partial x} 
+ +  \alpha_m \frac{\partial^2}{\partial x^2} \right) 
+  T^{n+1/4}
+ + 
+ \frac{1}{2 \sigma} \left(
+  \frac{\partial \psi^n}{\partial x} \frac{\partial}{\partial y}
++ \alpha_m \frac{\partial^2}{\partial y^2}
+\right)  T^n \\
+\frac{T^{n+1/2} - T^{n+1/4} }{\Delta t/4} &=& 
+\frac{1}{2 \sigma} \left (
+ -\frac{\partial \psi^{n+1/4}}{\partial y} \frac{\partial}{\partial x} 
+ +  \alpha_m \frac{\partial^2}{\partial x^2} \right) 
+  T^{n+1/4}
+ + 
+ \frac{1}{2 \sigma} \left(
+  \frac{\partial \psi^{n+1/2} }{\partial x} \frac{\partial}{\partial y}
++ \alpha_m \frac{\partial^2}{\partial y^2}
+\right)  T^{n+1/2} 
+\end{eqnarray}
+Discretizing the spatial derivatives using 2nd order central differences, we have
+\begin{eqnarray}
+(1+2 H_x) T^{n+1/4}_{i,j}  + (-U^n_{i,j} - H_x) T^{n+1/4}_{i-1, j} + (U^n_{i,j} - H_x) T^{n+1/4}_{i+1, j} = 
+(1-2 H_y) T^n_{i,j} + (V^n_{i,j} + H_y) T^n_{i, j-1} + (-V^n_{i,j} + H_y) T^n_{i, j+1} \\
+(1+2 H_y) T^{n+1/2}_{i,j}  + (-V^n_{i,j} - H_y) T^{n+1/2}_{i, j-1} + (V^n_{i,j} - H_y) T^{n+1/2}_{i, j+1} = 
+(1-2 H_x) T^{n+1/4}_{i,j} + (U^n_{i,j} + H_x) T^{n+1/4}_{i-1, j} + (-U^n_{i,j} + H_x) T^{n+1/4}_{i+1, j}
+\end{eqnarray}
+Where
+\begin{eqnarray}
+&&H_x = \frac{\alpha_m \Delta t/4}{2 \sigma \Delta x^2} \hspace{5ex} H_y = \frac{\alpha_m \Delta t/4}{2 \sigma \Delta y^2}  \\
+&&U^n_{i,j} = \frac{u^n_{i,j} \Delta t/4}{4 \sigma \Delta x} \hspace{5ex} V^n_{i,j} = \frac{-v^n_{i,j} \Delta t/4}{4 \sigma \Delta y} \hspace{5ex} 
+\end{eqnarray}
+So to solve for $ T^{n+1/2} $ we solve the first set of equations for all $j$, then the second set of equations for all $i$.
+
+Written as matrices for an arbitrary timestep $\delta$, this means solving firstly
+\begin{eqnarray}
+\left( \begin{array}{c c c c c c c}
+1				&0					&0				&0				&0					&\hdots				&0	\\	
+- U^{n}_{2,j} - H_x 	& 1+2 H_x				& U^{n}_{2,j} - H_x 	& 0 				& 0 					& \hdots 				& 0	\\
+0				&- U^{n}_{3,j} - H_x 		& 1+2 H_x			& U^{n}_{3,j} - H_x 	& 0 					&\hdots  				& 0	\\
+\vdots 			& \ddots 				& \ddots 			& \ddots 			& \ddots 				& \ddots 				& 0\\		
+0 				& \hdots 				&0	 			& 0				& - U^{n}_{N_x-1,j} - H_x 	& 1+2 H_x  				& U^{n}_{N_x-1,j} - H_x	\\
+0 				& \hdots 				&0	 			& 0				& 0 					& 0					& 1  
+\end{array} \right) 
+\left( \begin{array}{c}
+T^{n+\delta/2}_{1,j}  \\
+T^{n+\delta/2}_{2,j} \\
+T^{n+\delta/2}_{3,j}  \\
+\vdots \\
+T^{n+\delta/2}_{N_x,j} \end{array} \right) 
+\\ =
+\left( \begin{array}{c}
+ T^n_{1,j} \\
+(1-2 H_y) T^n_{2,j} + (V^n_{2,j} + H_y) T^n_{2, j-1} + (-V^n_{2,j} + H_y) T^n_{2, j+1}   \\
+(1-2 H_y) T^n_{3,j} + (V^n_{3,j} + H_y) T^n_{3, j-1} + (-V^n_{3,j} + H_y) T^n_{3, j+1}    \\
+\vdots \\
+T^n_{N_x,j} \end{array} \right) 
+\end{eqnarray}
+for $j = 2...(N_y-1)$, and then solving
+\begin{eqnarray}
+\left( \begin{array}{c c c c c c c}
+1				&0					&0				&0				&0					&\hdots				&0	\\	
+- V^{n}_{i,2} - H_y 	& 1+2 H_y				& V^{n}_{i,2} - H_y 	& 0 				& 0 					& \hdots 				& 0	\\
+0				&- V^{n}_{i,3} - H_y 		& 1+2 H_y			& V^{n}_{i,3} - H_y 	& 0 					&\hdots  				& 0	\\
+\vdots 			& \ddots 				& \ddots 			& \ddots 			& \ddots 				& \ddots 				& 0\\		
+0 				& \hdots 				&0	 			& 0				& - V^{n}_{i,N_y-1} - H_y 	& 1+2 H_y  				& V^{n}_{i,N_y-1} - H_y	\\
+0 				& \hdots 				&0	 			& 0				& 0 					& 0					& 1  
+\end{array} \right) 
+\left( \begin{array}{c}
+T^{n+\delta}_{i,1}  \\
+T^{n+\delta}_{i,2} \\
+T^{n+\delta}_{i,3}  \\
+\vdots \\
+T^{n+\delta}_{i, N_y} \end{array} \right) 
+\\ =
+\left( \begin{array}{c}
+ T^n_{i,1} \\
+(1-2 H_x) T^{n+\delta/2}_{i,2} + (U^n_{i,2} + H_x) T^{n+ \delta/2}_{i-1, 2} + (-U^n_{i,2} + H_x) T^{n+ \delta/2}_{i+1, 2}\\
+(1-2 H_x) T^{n+\delta/2}_{i,3} + (U^n_{i,3} + H_x) T^{n+ \delta/2}_{i-1, 3} + (-U^n_{i,3} + H_x) T^{n+ \delta/2}_{i+1, 3}\\
+\vdots \\
+T^n_{i, N_y} \end{array} \right) 
+\end{eqnarray}
+for $i=2...(N_x-1)$. This then gives us $T^{n+1/2}$. \\
+Thirdly, we calculate $\psi^{n+\frac{1}{2}}$ from the poisson equation using SOR again.\\
+Finally we calculate $T^{n+1}$ with a timestep $dt$, using $\psi^{n+\frac{1}{2}}$ for the velocity and using exactly the same method as the second step.
+
+\subsection{Boundary Conditions}
+We require boundary conditions on $\psi$ and $T$. Some of these are given by Nield \& Bejan, the rest are chosen ourselves. 
+
+\textbf{On the wall} 
+\begin{eqnarray}
+y=0 \hspace{10ex} T = T_\infty + A x\\ 
+\frac{\partial \psi}{\partial x} = 0 \implies \psi = \text{const} = 0
+\end{eqnarray}
+
+\textbf{On the left}
+\begin{eqnarray}
+y = \infty \hspace{10ex} T = T_\infty \hspace{10ex} \frac{\partial \psi}{\partial y} = 0
+\end{eqnarray}
+
+\textbf{At the bottom}
+\begin{eqnarray}
+x = 0 \hspace{10ex} T = T_\infty \hspace{10ex} \psi = 0
+\end{eqnarray}
+
+\textbf{At the top}
+\begin{eqnarray}
+x= \infty  \hspace{10ex} T = T_{analytic}(x, y) \hspace{10ex} \psi = \psi_{analytic}(x, y)
+\end{eqnarray}
+
+Where the analytic solution is given by
+\begin{eqnarray}
+\psi(\eta) &=& \alpha_m \sqrt{Ra_x} f(\eta) \\
+T(\eta) &=& A x \theta(\eta) + T_\infty \\
+\end{eqnarray}
+where we have defined
+\begin{eqnarray}
+\eta &=& y \sqrt{\frac{g \beta K}{\nu \alpha_m}} \label{eq:y-eta}\\
+Ra_x &=& \frac{g \beta K}{\nu \alpha_m} A x^2
+\end{eqnarray}
+
+Such that, in terms of $x$ and $y$, 
+\begin{eqnarray}
+\psi(x,y) = \alpha_m \sqrt{\frac{g \beta K}{\nu \alpha_m}} x f(\eta(y)) \\
+T(x, y) = A x \theta(\eta(y)) + T_\infty
+\end{eqnarray}
+
+The functions $f(\eta)$, and $\theta(\eta)$ are the solutions of the differential equations
+\begin{eqnarray}
+f'' - \theta' &=& 0 \label{eq:diff1} \\
+\theta'' + f \theta' - f' \theta &=& 0 \label{eq:diff2}\\
+f(0) = 0, &&\hspace{6ex} \theta(0) = 1 \\
+f'(\infty) = 0, &&\hspace{5ex} \theta(\infty) = 0
+\end{eqnarray}
+equation \eqref{eq:diff1} can be integrated, with the boundary conditions, to give
+\begin{equation}
+f' = \theta
+\end{equation}
+leaving just 
+\begin{equation}
+f''' + ff'' - (f')^2 = 0 \label{eq:f-diff}
+\end{equation}
+to be solved. \\
+
+This is done numerically in matlab. An initial attempt was made using the bvp4c routine, but it couldn't handle the boundaries at infinity so we convert the boundary value problem to an initial value problem. We already know that
+\begin{equation}
+f(0) = 0, f'(0) = 0 \label{eq:diff-bcs}
+\end{equation}
+and we then calculate $f''(0)$ by solving \eqref{eq:f-diff} using the Mathematica function NDSolve. We find that $f''(0) = -1$. With this, we can re-formulate \eqref{eq:f-diff} as
+\begin{eqnarray}
+&&f =f_3, f' = f_2, f'' = f_1 \\
+f'_1 &=& f_3^2 - f_3 f_1 \\
+f'_2 &=& f_1 \\
+f'_3 &=& f_2 \\
+&&f_1(0) = -1, f_2(0) = 1, f_3(0) = 0
+\end{eqnarray}
+Integrating this using ode45 gives us a numerical solution for $f$, which is plotted in figure \ref{fig:convectionInPorousMedia-f-theta}. Satisfied that this agrees with the $\lambda = 1$ case presented in figure 5.1 of Nield \& Bejan, we apply the calculated solutions at the top boundary and solve numerically for $\psi$ and $T$ everywhere else.
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=4.0in]{convectionInPorousMedia-f-theta}
+     \label{fig:convectionInPorousMedia-f-theta}
+     \caption{}
+ \end{figure}
+ From this solution for $f(\eta) and \theta(\eta)$ we can plot the `analytic' solution in figure \ref{fig:convectionInPorousMedia-analytic-sol}
+ \begin{figure}[ht]
+    \centering
+    \includegraphics[width=4.0in]{convectionInPorousMedia-T-analytic-15by15}
+    \includegraphics[width=4.0in]{convectionInPorousMedia-psi-analytic-15by15}
+     \label{fig:convectionInPorousMedia-analytic-sol}
+     \caption{Analytic solutions for $T$ and $\psi$. Note the axes ares rotated differently in the two graphs.}
+ \end{figure}
+ Note that we have defined $\gamma = \frac{g \beta K}{\nu}$.
+
+\subsection{Domain}
+From the solutions obtained for $f(\eta)$ and $\theta(\eta)$, we find that $\eta_{max} = 15$ is a good approximation to the behaviour at infinity. Subsituting this into \eqref{eq:y-eta} gives the extent of the grid in terms of $y$. \\
+
+The grid size in the $x$ dimension is set to the same value for no good reason.
+
+\subsection{Testing the code}
+Firstly, we fix $T$ at the analytic steady state value and calculate $\psi$, the error between this and the analytic value of $\psi$ is small and decreases with the size of a grid square, confirming that the code correctly solves the poisson equation. \\
+
+Next, we fix $\psi$ to the analytic steady state solution and calculate the velocities from it, comparing these two those derived from the analytic solution for $\psi$
+\begin{eqnarray}
+\psi &=& \sqrt{\frac{g \beta K}{\nu} \alpha_m} x f(\eta) \\
+u = \frac{\partial \psi}{\partial y} &=& x \sqrt{\frac{g \beta K}{\nu} \alpha_m} \frac{\partial \eta}{\partial y} \frac{\partial}{\partial \eta} f(\eta) \\
+&=& x \sqrt{\frac{g \beta K}{\nu} \alpha_m} \sqrt{\frac{g \beta K}{\nu  \alpha_m} } \theta(\eta) \\
+&=&x \frac{g \beta K}{\nu} \theta(\eta) \\
+v = -  \frac{\partial \psi}{\partial x} &=& - \sqrt{\frac{g \beta K}{\nu} \alpha_m} f(\eta)
+\end{eqnarray}
+These are all calculated correctly, with the exception of the values at the boundary where the finite difference method is only first order. However these values aren't used, so this isn't an issue.
+
+Finally we calculate $T$ from analytic values of $\psi$ and velocity, and this works correctly too.
+
+Putting everything together, 
+
+
+\begin{comment}
+The numerically calculated velocities agree well with those calculated analytically, with the exception of $u(x, y=0)$ due to it being on the edge and therefore only 1st order in accuracy. This could be fixed by adding extra grid points outside the domain, but as $u(x, y=0)$ is not required for the calculation of $T$ we will ignore it. \\
+
+Finally, we test that $T$ is calculated correctly given the analytic values of $\psi$ and $(u, v)$ and find that it is. \\
+
+\subsection{Results}
+The combined code was run until it converged on a steady state solution, i.e. the difference between successive timesteps was sufficiently small. Reaching convergence was fairly temperamental. Despite enforcing the CFL condition on the the timestep, $dt$, convergence was hard to achieve. I started looking for solutions with $\eta_{max} = 0.1$ and imposing the analytic solution at the boundaries, then gradually increasing $\eta_{max}$. Convergence was good initially but rapidly became poor.
+
+Convergence was achieved for:
+
+\begin{tabular}{ l | l | l | l | l}
+ $\alpha_m$  &  $\sigma$  &  $\eta_{max}$ &  $u_{max} $  &  $x_{num}$\\
+  1 & 1 & 0.1 & 1 & 20
+\end{tabular}
+
+\end{comment}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%  Horton Rogers Lapwood  %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{The Horton-Rogers-Lapwood problem}
+As a final test of the cartesian code, I will calculate the nusselt number for a flow in a square domain ($0<x<L, 0<z<1$) satisfying
+\begin{eqnarray}
+\frac{\partial \theta}{\partial t} + \mathbf{u} \cdot \nabla \theta = \frac{1}{R_m} \nabla^2 \theta \\
+\frac{\partial \theta}{\partial x} = - \nabla^2 \psi
+\end{eqnarray}
+with boundary conditions
+\begin{eqnarray}
+u = \psi_z = 0 \text{ at } x=0, L \\
+w = -\psi_x = 0 \text{ at } z = 0,1 \\
+\theta = \left\{
+  \begin{array}{lr}
+   0 & : z=0\\
+   1 & : z=1
+  \end{array}
+\right. \\
+\theta_x = 0 \text{ at } x=0, L
+\end{eqnarray}
+The first two are satisfied by setting $\psi = 0$ along all the boundaries.
+The third is easily introduced by fixing the values at the edge of the grid.
+The last is satisfied by writing
+\begin{eqnarray}
+\theta_{1,j} - \theta_{2,j} = 0 \implies  \theta_{1,j} = \theta_{2,j}\\
+\theta_{N_x,j} - \theta_{N_x - 1, j} = 0 \implies \theta_{N_x,j} = \theta_{N_x - 1, j}
+\end{eqnarray}
+and substituting this into the discretization of the heat equation.
+
+Linear stability analysis predicts that there should be an onset of convection at $4 \pi^2$ for $L=2$, and this is observed in the model.
+
+
+\end{document}

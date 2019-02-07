@@ -1,4 +1,7 @@
 *.mat
 *.fig
+*.gz
+*.log
+*.aux
 **/initial_data*/*
 **/data/*

@@ -1,0 +1,11 @@
+\BOOKMARK [1][-]{section.1}{Cartesian notes}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Two dimensional cartesian stream function}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{Two dimensional axisymmetric stream function}{section.1}% 3
+\BOOKMARK [1][-]{section.2}{Solving poisson's equation}{}% 4
+\BOOKMARK [2][-]{subsection.2.1}{Results}{section.2}% 5
+\BOOKMARK [1][-]{section.3}{Coupled heat and momentum equations}{}% 6
+\BOOKMARK [2][-]{subsection.3.1}{Discretization and iteration}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.2}{Boundary Conditions}{section.3}% 8
+\BOOKMARK [2][-]{subsection.3.3}{Domain}{section.3}% 9
+\BOOKMARK [2][-]{subsection.3.4}{Testing the code}{section.3}% 10
+\BOOKMARK [1][-]{section.4}{The Horton-Rogers-Lapwood problem}{}% 11

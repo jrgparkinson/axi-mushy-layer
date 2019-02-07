@@ -1,0 +1,593 @@
+\documentclass[11pt]{proc}
+
+\usepackage{graphicx}
+
+\usepackage{subcaption}
+\usepackage{epstopdf}
+\usepackage{float}
+\usepackage{pgfplots}
+
+
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+\usepackage[round]{natbib}
+
+\usepackage{verbatim}
+
+\usepackage{mathtools}
+\usepackage{esint}
+\usepackage{mathrsfs}
+\usepackage{xfrac}
+
+\usepackage{subeqnarray}
+
+\usepgfplotslibrary{external} 
+\tikzexternalize[prefix=./figures/]
+
+
+
+\graphicspath{ {./figures/} }
+
+\renewcommand{\sectionautorefname}{\S}
+\renewcommand{\subsectionautorefname}{\S}
+
+\newcommand{\St}{\mathscr{S}}
+\newcommand{\CompRatio}{\mathscr{C}}
+
+\newcommand{\crefrangeconjunction}{--}
+
+\usepackage[compact]{titlesec}  
+\titlespacing{\section}{8pt}{10pt}{8pt}
+
+\usepackage[labelformat=simple]{subcaption}
+\renewcommand\thesubfigure{(\alph{subfigure})}
+
+\captionsetup[figure]{skip=4pt}
+
+
+\begin{document}
+
+\bibliographystyle{plainnat}
+
+%set the line spacing, 13pt is the minimum allowed
+\setlength{\baselineskip}{13pt}
+
+%use one column for the title page
+\onecolumn
+
+\begin{comment}
+%remove the page number from the title page
+\clearpage
+\thispagestyle{empty}
+Candidate number: ... \\
+Project number : AO04 \\
+Project Title: The seeds of “brinicles”: flow and pattern formation in sea ice and mushy layers \\
+The supervisor’s name: Dr A Wells and Dr D Rees-Jones \\
+Word count: ...
+
+%start the actual report
+\newpage
+\end{comment}
+
+%set this as page 1
+\setcounter{page}{1}
+
+\begin{center}
+\huge  The seeds of `brinicles': flow and pattern formation in sea ice and mushy layers \normalsize
+\end{center}
+
+
+\begin{abstract}
+During the growth of young sea ice a porous mushy layer forms, consisting of ice crystals bathed in liquid brine, within which convection drives salt fluxes between the ice and the ocean. For a sufficiently large Rayleigh number, channels of liquid brine form within the mushy layer as part of buoyancy-driven convection cells. In contrast to previous studies, which consider a two dimensional planar geometry, I present a model for an axisymmetric cylindrical convection cell which has more physical relevance to sea ice. A comparison between results in the two different geometries is made. [... what do I find...]
+
+  in which a number of approximations are used to simplify the geometry and governing equations, and solve it numerically.
+  
+The behaviour of the system is investigated across a range of Rayleigh numbers and for different sizes of convection cell. In particular, conditions for the presence of brine channels and measures of the magnitude of convection are determined.
+[Need to add another sentence or two once I know what the experimental results actually are]
+\end{abstract}
+
+\section{Introduction}
+\label{sec:intro}
+
+Between 1978 and 2014 the September minimum of Arctic sea ice extent fell by 40.2\%~\citep*{fetterer-02}. Over the same time period, the March maximum extent fell by only 8.7\% and, consequently, a greater area of the Arctic ocean is being frozen each year. It is therefore of increasing importance that the processes involved in the formation of new sea ice are well understood, such that they can be accurately incorporated into general circulation models. 
+
+In the presence of a cold atmosphere, sea ice forms on the surface of the ocean. It is a reactive porous medium consisting of solid ice crystals of low salinity surrounded by an intersititial highly-saline fluid, or brine; such a composite mixture is referred to as a mushy layer. When the mushy layer is cooled the ice crystals grow, reducing the volume occupied by the brine and therefore increasing its salinity. Therefore the salinity is greatest where the temperature is coldest, at the top of the mushy layer, and decreases towards the ocean at the bottom. This gradient drives convection; the super-saline liquid sinks, being replaced by the more buoyant and relatively fresh ocean water. 
+
+A sinking brine parcel has a greater salinity and lower temperature than the local equilibrium. The diffusion of salt is a significantly slower process than the diffusion of heat, so local equilibrium is recovered by the melting of ice crystals. The resulting increase in the local liquid volume decreases salinity, whilst the latent heat supplied to melt the solid phase causes cooling. Conversely, rising ocean water is less saline and warmer than its environment and leads to freezing in the mushy layer. Permeability increases as local solid fraction decreases, so is greater where the flow is downward and reduced where the flow is rising. A larger permeability in the downward region permits a stronger flow, which in turn leads to greater melting and eventually the formation of entirely liquid channels into the which the flow of brine out of the mushy layer is focussed. This process is illustrated in figure~\ref{subfig:convection-in-sea-ice}.
+
+Drainage of brine from sea ice increases the salinity and density of the ocean below. This is known to have an effect on the large scale ocean circulation \citep*{brandon-et-al-10}, whilst the physical properties of the newly formed sea ice are dependant on the quantity of interstitial brine that remains \citep*{petrich-eicken-10}. There are other process through which desalination of sea ice can occur, however a review by \citet*{notz-worster-09} concluded that the only significant process in the winter freezing season (October - March) is buoyancy-driven convection. 
+
+Strong salt fluxes attributed to convection have been observed in the Arctic Ocean \citep*{wettlaufer-et-al-00} and the dense, cold, plumes emanating from them have recently been captured on camera in the Antarctic Ocean~\citep*{frozen-planet-11}. These processes have been reproduced using analogous binary mixtures. For example,~\citet*{wettlaufer-et-al-97} studied NaCl-water solutions cooled from above, whilst several studies have considered $\textrm{NH}_4\textrm{Cl}$-water solutions in which $\textrm{NH}_4\textrm{Cl}$ crystals are formed at the cooled base of a tank. A detailed review of these experiments is presented in~\citet*{zhong-et-al-12}.
+
+
+\begin{figure}[t]
+\centering
+\begin{subfigure}[t]{.55\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{convection-in-sea-ice.pdf}
+    \caption{}
+    \label{subfig:convection-in-sea-ice}
+\end{subfigure}
+\quad
+\begin{subfigure}[t]{.42\linewidth}
+   \centering
+    \includegraphics[width=\linewidth]{mushy-layer-chimneys-photo-schulze-worster.jpg}
+    \caption{}
+    \label{subfig:schulze-worster-photo}
+\end{subfigure}
+
+\caption{~\subref{subfig:convection-in-sea-ice} Summary of the key features of steady state buoyancy-driven convection during the formation of sea ice with fully developed chimneys. Think lines are streamlines of fluid flow, which circulate from the underlying ocean through the porous ice and out of the chimneys. The grey circles on the right represent ice crystals, illustrating the reduced permeability at the top of the mushy layer.~\subref{subfig:schulze-worster-photo} Photograph of $\textrm{NH}_4\textrm{Cl}$ directional solidification. Notice the formation of narrow, roughly straight sided, chimneys, and also that, apart from where the chimneys meet the liquid phase, the mush-liquid boundary is roughly flat. Taken from Schulze and Worster (1998), but reflected in the horizontal plane to conform with the orientation of sea ice.}
+
+ \label{fig:overview-diagram-photo}
+
+\end{figure}
+
+
+An alternative approach studies convection over a wide range of parameters using numerical models. Solving the full problem in this way is both theoretically and computationally cumbersome. Therefore, motivated by experimental observations and a desire for mathematical tractability, a variety of assumptions and simplifications must be introduced. A brief overview of the existing literature is given below, whilst more details are provided in~\autoref{sec:problem-formulation} in parallel with a description of the approximations made in this paper.
+
+
+~\citet*{schulze-worster-98} considered a two-dimensional planar arrangement, in which both the chimney wall and the mush-ocean boundary were modelled as straight sides (see figure~\ref{fig:arrangement}). Such an approximation is consistent to first order with experiment, as illustrated in figure~\ref{subfig:schulze-worster-photo}, and is ultimately the same approach that I will take.
+ %In the same paper, they then extend their model to include a mush-ocean boundary with a shape chosen to satisfy the boundary conditions more completely than the previous  `flat top' approach.
+\citet*{chung-worster-02} also solved numerically for a viscous flow in the liquid region, allowing them to apply jump conditions across the mush-liquid boundaries and hence resolve their shape. This approach confirmed that a straight sided chimney is a good approximation near the mush-ocean boundary, but less accurate away from ocean where the chimney width can decrease to $0$. Solving for the flow in the liquid region is computationally expensive. Therefore more recent studies \citep*{wells-et-al-10, wells-et-al-13} have combined the Schulze \& Worster approach to the mush-liquid boundary with Chung \& Worster's treatment of the chimney wall. 
+
+All these studies are based on a two dimensional planar model and, as shown by~\citet*{rees-jones-worster-13}, axisymmetric convection displays important qualitative differences. For example, salt flux depends on the far field ocean temperature in axisymmetry but does not in a planar geometry. Moreover,~\citet*{rees-jones-worster-13} also demonstrated that full three dimensional convection could be reasonably approximated by an axisymmetric arrangement. Their results were obtained by constructing a simple model which, through a similarity solution, reduced to a system of ordinary differential equations. In order to test the robustness of their conclusions, I construct a full numerical model for convective flow through brine channels in an axisymmetric geometry. For simplicity, I apply Schulze \& Worster's assumptions of a straight sided chimney and flat mush-ocean boundary and focus on solutions with no azimuthal variation.
+
+[Add a bit more in here once I have some firm results]
+
+The derivation of the governing equations and boundary conditions is presented in~\autoref{sec:problem-formulation}. In~\autoref{sec:computational-procedure} I describe the numerical methods used to solve the problem and how the solution has been verified. Steady states are then found for a range of parameters, and the results of these simulations are presented and discussed in~\autoref{sec:results}. Finally, I conclude in~\autoref{sec:conclusion}.
+
+\section{Problem formulation}
+\label{sec:problem-formulation}
+
+\begin{figure}[t]
+    \centering
+       \includegraphics[width=\textwidth]{simplified-arrangement}
+       \caption{Simplified mushy layer geometry (left) showing a radial cross section of an axisymmetric annular region. Dashed lines show the geometry of the full nonlinear problem, for comparison. At the top of the convection cell, the mushy layer is at the eutectic temperature - the point where, for any liquid concentration, the binary mixture forms an impermeable solid. This can be seen in the phase diagram (right) where the thick black line illustrates the path taken by a fluid parcel as it is cooled from the ocean to the eutectic solid, under the assumption that it is always in thermodynamic equilibirum.}
+    \label{fig:arrangement}
+\end{figure}
+
+I consider steady state convection in a cylindrical region of a mushy layer with a chimney at the centre, as shown in figure~\ref{fig:arrangement}. The chimney is centred on $r=0$ and has radius $a$, whilst the full convection cell has radius $R$ and height $H$. At the top of the mushy layer is a region of ice at the eutectic temperature, $T_E$, the point at which the binary mixture becomes impermeable for all values of the solute concentration. In line with the previous studies mentioned in~\autoref{sec:intro}, this region is assumed to grow downwards at a constant rate $V$. Although this is not truly representative of sea ice, where the growth rate decreases as freezing progresses, it is a simplifying assumption that allows for steady state solutions. The reference frame is chosen so that the origin remains fixed at the base of the eutectic solid. From this perspective, the mushy layer is pulled upwards between two fixed heat exchangers at the growth rate, $V$.
+
+Following previous authors, I assume that the mushy layer is ideal \citep*{worster-97}. Within this assumption, the temperature $T$ and solute concentration (salinity) $C$ are in local thermodynamic equilibrium and obey a linear liquidus relationship
+
+\begin{equation}
+\label{eq:liquidus}
+T = T_L(C) = T_E  - \Gamma (C-C_E) \; .
+\end{equation}
+
+ The ocean is assumed to have constant salinity $C_0$ and the temperature at the mush-liquid boundary is therefore given by $T_0 = T_L(C_0)$. In the ocean, away from the mush-liquid boundary, the far field temperature is $T_\infty$.
+
+\subsection{Governing equations}
+Flow in an ideal mushy layer is governed by Darcy's equation for flow in a porous medium, and assumed to be non-divergent,
+\begin{equation}
+\label{eq:darcys-eqn}
+ \mathbf{u} = \frac{\Pi}{\mu} (- \nabla p + \rho \mathbf{g}); \hspace{15ex} \nabla \cdot \mathbf{u} = 0,
+\end{equation}
+where $\mathbf{u}$ represent the flux of the interstitial fluid relative to the solid phase, known as the Darcy velocity. I have also introduced the permeability $\Pi$, pressure $p$, dynamic viscosity $\mu$, density $\rho$ and gravitational acceleration $\mathbf{g}$. In line with previous studies~\citep*{schulze-worster-98,chung-worster-02} I consider the permeability to be of the form $\Pi = \Pi_0 (1-\phi)^3$.  The density depends on the temperature and salinity through the equation of state, which is linearised to yield
+\begin{equation}
+\rho = \rho_0 (1-\alpha (T-T_0) + \beta (C-C_0)),
+\end{equation}
+where $\rho_0$ is a constant reference density, $\alpha$ is a constant thermal expansion coefficient, and $\beta$ a corresponding constant haline coefficient.
+
+This can be written as a function of $C$ only using the liquidus relationship~\eqref{eq:liquidus}. Substituting into equation~\eqref{eq:darcys-eqn} and defining the modified pressure $P = p + \rho_0 gz$ results in
+\begin{equation}
+\label{eq:darcys-equation-T}
+\mathbf{u} =- \frac{\Pi}{\mu} (\nabla P + \rho_0 g \Gamma^* \mathbf{\hat{z}} (C-C_0) ),
+\end{equation}
+where $\Gamma^* =  \alpha \Gamma + \beta$. Conservation of heat is determined by
+\begin{equation}
+\label{eq:heat-conservation}
+\left( \frac{\partial}{\partial t} + V\frac{\partial}{\partial z}\right) T + \mathbf{u} \cdot \nabla T = \kappa \nabla^2 T  + \frac{L}{c_p} \left( \frac{\partial}{\partial t} + V\frac{\partial}{\partial z} \right) \phi \; , 
+\end{equation}
+where $\phi$ is the solid fraction, $L$ the latent heat of fusion per unit mass, $c_p$ the specific heat capacity and the additional $z-$derivatives are due to the choice of reference frame. In addition to the expressions for advection and diffusion, the final term represents the latent heat released during the formation of ice crystals within the mushy layer.
+
+Finally, conservation of solute is given by
+\begin{equation}
+\label{eq:solute-conservation}
+\left( \frac{\partial}{\partial t} + V\frac{\partial}{\partial z}\right) \left[ (1-\phi) C + \phi C_s \right] + \mathbf{u} \cdot \nabla C =  0 \; ,
+\end{equation}
+where the solute concentration in the solid phase is denoted by $C_s$ and therefore $(1-\phi) C + \phi C_s$ is the volume weighted average concentration. Heat diffusion is a much faster process than solute diffusion, so solute transport is assumed to proceed solely through advection.
+
+\subsection{Non-dimensionalisation and scaling approximations}
+\label{sec:approximations}
+Non-dimensional temperature $\theta$ and solute concentration $\Theta$ are defined by
+\begin{equation}
+\theta = \frac{T-T_0}{\Delta T}, \hspace{15ex} \Theta = \frac{C-C_0}{\Delta C},
+\end{equation}
+where $\Delta T = T_0 - T_E$ and $\Delta C = C_E - C_0$. Using the liquidus relationship~\eqref{eq:liquidus}, it is possible to see that $\theta = - \Theta$ in the mushy layer. Equations~\eqref{eq:darcys-equation-T}--~\eqref{eq:solute-conservation} can be non-dimensionalised by scaling velocities with $V$, lengths with $\kappa/V$, time with $\kappa/V^2$, permeability with $\Pi_0$ and pressure with $\rho_0 g \Gamma^* \Delta C \kappa / V$.
+
+Using primes to denote dimensionless quantities, this gives
+\begingroup
+\setlength\belowdisplayskip{0pt}
+\gdef\thesubequation{\theequation \textit{a,b}}
+\begin{subeqnarray}
+\mathbf{u'} &=& Rm \, \Pi' \left(-\nabla' P' + \theta \mathbf{\hat{z}} \right), \label{eq:darcy-dimless} \qquad
+\nabla' \cdot \mathbf{u'} = 0 \label{eq:mass-conservation-dimless},
+\end{subeqnarray}
+\endgroup
+\begin{eqnarray}
+\left( \frac{\partial}{\partial t'} + \frac{\partial}{\partial z'}\right) \theta + \mathbf{u'} \cdot \nabla' \theta &=& \nabla'^2 \theta  + \St \left( \frac{\partial}{\partial t'} + \frac{\partial}{\partial z'} \right) \phi,  \label{eq:heat-conservation-dimless} \\
+\left( \frac{\partial}{\partial t'} + \frac{\partial}{\partial z'}\right) \left[ (1-\phi) \theta - \phi \CompRatio \right] + \mathbf{u'} \cdot \nabla \theta &=&  0, \label{eq:solute-conservation-dimless}
+\end{eqnarray}
+where I have introduced the Rayleigh number in the mushy layer, $Rm$, Stefan number, $\St$, concentration ratio $\CompRatio$ and will later use the dimensionless far field temperature $\theta_\infty$.
+\begin{eqnarray}
+Rm = \frac{\Pi \rho_0 g \Gamma^* \Delta C}{\mu V}, \hspace{10ex} \St = \frac{L}{c_p \Delta T}, \hspace{10ex} \CompRatio = \frac{C_s - C_0}{\Delta C}, \hspace{10ex} \theta_\infty = \frac{T_\infty - T_0}{\Delta T}.
+\end{eqnarray}
+%See Worster 97p.102 for description of these constants
+The Rayleigh number quantifies the strength of the buoyancy force relative to viscous dissipative forces in the mushy layer; it is the primary measure of the strength of convection. The Stefan number is the ratio between the latent heat released upon solidification and the heat that must be extracted to cool a liquid parcel from $T_0$ to $T_E$. Because heat diffusion occurs quicker than salt diffusion, the rate of solute transport governs the rate of phase change; this is characterised by the concentration ratio. As $\Delta C$ drives the transport of solute, when $\CompRatio$ is large the rate of phase change is slow. For the remainder of the paper I will drop the primes and all quantities, unless otherwise stated, are non-dimensional. I will also employ a subscript notation for partial derivatives.
+% In this case $\St$ is large so, as $\Delta T$ drives the heat transport across the mushy layer, the phase boundary with the eutectic solid can be considered as static relative to heat transfer across it.
+
+Following~\citet*{rees-jones-worster-13} I assume that $\CompRatio \gg 1$. In this limit, the equation for solute conservation~\eqref{eq:solute-conservation-dimless} reduces to
+\begin{equation}
+\phi_t + \phi_z = \frac{ \mathbf{u} \cdot \nabla \theta}{\CompRatio} + O\left(\frac{1}{\CompRatio}\right).
+\end{equation}
+From Darcy's law~\eqref{eq:darcy-dimless}, $\mathbf{u} \cdot \nabla \theta \sim Rm$, so making the further assumption that $Rm \ll \CompRatio$ results in $\phi \ll 1$ and therefore $\Pi = \Pi_0(1-\phi)^3 = \Pi_0$. A second consequence of this result is that, after also assuming that $\St \ll \CompRatio$, the heat equation simplifies to
+\begin{equation}
+\label{eq:heat-psi}
+r \theta_t + r \theta_z - \psi_z \theta_r + \psi_r \theta_z = (r \theta_r)_r + r \theta_{zz},
+\end{equation}
+where a Stokes streamfunction $\psi = (-\psi_z/r, \psi_r/r)$ that satisfies mass conservation~\eqref{eq:mass-conservation-dimless} has been introduced. This is a crucial simplification because it uncouples the temperature and solid fraction. Taking the curl of the momentum equation~\eqref{eq:darcy-dimless} eliminates the pressure term, leaving the vorticity equation
+\begin{equation}
+\label{eq:momentum-simplified}
+(\psi_r/r)_r + \psi_{zz}/r = Rm \, \theta_r \; .
+\end{equation}
+
+Equations~\eqref{eq:mass-conservation-dimless},~\eqref{eq:momentum-simplified} and ~\eqref{eq:heat-psi} govern the evolution of $\theta$ and $\psi$ in the mushy layer, subject to the boundary conditions which will be derived in the next section.
+
+\subsection{Boundary conditions}
+\begin{figure}[ht!]
+    \centering
+       \includegraphics[width=0.8\textwidth]{boundary-conditions}
+       \caption{Summary of the governing equations and boundary conditions, as derived in~\autoref{sec:problem-formulation}}
+    \label{fig:boundary-conditions}
+\end{figure}
+
+
+The full set of equations and boundary conditions are summarised in figure~\ref{fig:boundary-conditions}, and derived below. At the solid-mush boundary $(z=0)$ the temperature and concentration are fixed at their eutectic values so $\theta = -1$. The constraint that there is no normal flow into the solid ensures that $\psi_r = 0$, which we satisfy by setting $\psi = 0$ along the boundary.
+
+At the edge of the cylindrical region $(r=R)$ the conditions of no normal flow or heat flux require that $\theta_r=0$ and $\psi_z=0$. The latter condition is again satisfied by setting $\psi = 0$ along the boundary.
+
+At the mush-ocean boundary $(z=-H)$ the temperature and concentration are fixed at $T_0$ and $C_0$, so $\theta=0$.~\citet*{emms-fowler-94} have shown that there is approximately constant dynamic pressure along the boundary, so Darcy's law~\eqref{eq:darcy-dimless} gives the condition $\psi_z = 0$. 
+
+\subsubsection{The chimney}
+At the middle of the chimney $(r=0)$ the conditions that $\psi$ and $u_z$ must be continuous determine the boundary conditions 
+\begin{equation}
+\label{eq:axi-chimney-bcs}
+\psi = 0; \hspace{5ex} (\psi_r/r)_r = 0,   \hspace{5ex} (r=0).
+\end{equation}
+To avoid solving numerically for the liquid flow inside the chimney, I follow previous authors~\citep*{schulze-worster-98,chung-worster-02,wells-et-al-10} and, adapting their method from a planar to an axisymmetric geometry, use the observation that chimneys are narrow compared to the full convection cell $(a\ll R)$ to analytically integrate from $r=0$ to $r=a$. 
+
+For small $r$, the steady state of the axisymmetric heat conservation equation~\ref{eq:heat-psi} is dominated by the $(r \theta_r)_r$ term. Therefore the leading order approximation to $\theta$ must not depend on $r$, so I expand
+\begin{equation}
+\label{eq:theta-approx}
+\theta(r,z) = \theta^0(z) + \theta^1(r,z), \hspace{5ex} \theta^1 \ll \theta^0.
+\end{equation}
+Using this, equation~\eqref{eq:heat-psi} can be integrated to give
+\begin{equation}
+\label{eq:theta-a-bc}
+\psi_q \theta = a \theta_r   \hspace{5ex} (r=a)
+\end{equation}
+where $\psi_q = \psi + \frac{1}{2} r^2$ is the stream function for $\mathbf{q} = \mathbf{u} + \mathbf{V}$ and $\mathbf{V} = - \mathbf{\hat{z}}$ after being non-dimensionalised.
+
+The Navier-Stokes equation in the chimney simplifies to the Stokes equation after making the additional assumption that $a \ll H$, for which the $z$-component is
+\begin{equation}
+\label{eq:stokes-channel}
+\nabla^2 (\psi_r/r) \approx \frac{Rm}{Da} \left(P_z + \Theta \right), \quad \text{ and } \nabla^2 \approx (r \partial_r)_r/r,
+\end{equation}
+where $Da=\Pi_0 V^2 / \kappa^2$ is the Darcy number. In the same limit, the pressure within the chimney is independent of $r$ \citep*{schulze-worster-98}.
+
+Motivated by the observations of~\citet*{rees-jones-worster-13}, I make a simplifying approximation that the solute concentration within the chimney is a linear function of $z$,
+\begin{equation}
+\Theta = \Theta(z) = 1 + \frac{z}{2H},
+\end{equation}
+and then integrate equation~\eqref{eq:stokes-channel} three times with respect to $r$ within the chimney. Applying the boundary conditions~\eqref{eq:axi-chimney-bcs}, I obtain an expression for $\psi$ on the mush-chimney boundary,
+\begin{equation}
+\psi = \frac{a^4}{16 Da} \left(\frac{\psi_r}{a} + Rm \left[ \theta -  \left( 1 + \frac{z}{2H} \right) \right] \right)   + \frac{1}{2} a \psi_r   \hspace{5ex} (r=a),
+\end{equation}
+where the momentum equation~\eqref{eq:darcy-dimless} has been used to replace the pressure term.
+
+\subsection{Patching equations}
+\label{sec:patching-equations}
+The chimney wall is a free boundary whose position is determined by relaxing to satisfy a constraint of marginal equilibrium (see~\autoref{sec:free-boundaries-theory} and ~\autoref{sec:free-boundary-method} for more details). To avoid having to remap the computational domain at each time step, an artificial boundary is introduced at $r=b$, where $b > a$ but $(b-a) \ll a$. The computational grid is then restricted to $b < r < R$. 
+
+The boundary conditions at $r=b$ are found by integrating analytically across the small region of the mushy layer $a < r < b$. The heat equation takes the same form in the liquid and the mushy layer, so the first boundary condition follows as the straightforward generalisaion of~\ref{eq:theta-a-bc}. With $b$ replacing $a$,
+\begin{equation}
+\psi_q \theta = b \theta_r  \hspace{5ex} (r=b).
+\end{equation}
+The vorticity equation~\eqref{eq:momentum-simplified} in the region $a < r < b$ is well approximated by
+\begin{equation}
+\label{eq:psi-patch-eq}
+(\psi_r/r)_r \approx -Rm \theta_r,
+\end{equation}
+and the continuity conditions at $r=a$ are
+\begin{equation}
+\label{eq:continuity-conditions}
+[\psi(a)]_-^+ = 0, \hspace{5ex} [\psi_r(a)]_-^+ = 0.
+\end{equation}
+Taylor expanding~\eqref{eq:theta-approx} about $r=b$ gives the first order approximation $\theta(r, z) \approx \theta(b, z) - (b-r) \theta_r(b, z)$. Applying this approximation in~\eqref{eq:psi-patch-eq}, integrating twice, and imposing the continuity conditions~\eqref{eq:continuity-conditions} results in
+\begin{equation}
+  \psi = \frac{1}{2} b \psi_r + \frac{a^4}{16 Da} \left(  \frac{\psi_r}{b}  +   Rm \left[ \theta - \left( 1 + \frac{z}{2H} \right) \right]  \right)  + \frac{1}{6} (b^3-a^3) Rm \, \theta_r \hspace{5ex} (r=b).
+\end{equation}
+
+\subsection{Free boundaries}
+\label{sec:free-boundaries-theory}
+
+The full problem of steady state convection in a mushy layer, as shown in figure~\ref{fig:arrangement}, has two free boundaries which need to be determined; the chimney wall and mush-ocean interface. Whilst in reality both of these boundaries are curves, I make the simplifying assumption that they are straight sided and therefore only have to solve for their position. A known problem with this approximation for the mush-ocean boundary is that it introduces a singularity at the point where the chimney and ocean meet~\citep*{schulze-worster-98}, but this issue appears to remain localised so is accepted as a necessary compromise.
+
+The mush-ocean boundary is treated in a subtly different way to previous authors.~\citet*{schulze-worster-98} have shown, by balancing advection and diffusion across a thermal boundary layer in the ocean, that the temperature gradient at this boundary is related to the far field temperature by
+\begin{equation}
+\theta_z = - \theta_\infty \, \mathbf{q} \cdot \mathbf{\hat{z}} = - \theta_\infty (\psi_r/r + 1) \hspace{5ex} (z=-H).
+\end{equation}
+Instead of fixing $\theta_\infty$ and using this condition to determine $z=H$, I instead fix $H$ and then calculate the corresponding $\theta_\infty$ from the resulting steady state. This approach removes the need to adjust the boundary at each time step, simplifying the model and reducing the runtime.
+
+The same approach cannot be taken at the chimney wall, as it is not related to another parameter in the way that $\theta_\infty$ and $H$ are coupled. To determine the position of this free boundary I implement the results of~\citet*{schulze-worster-99} who showed, through thermodynamic considerations and the requirement that the solid fraction must be positive in the mushy layer, that  
+\begin{equation}
+\label{eq:chimney-bc}
+\mathbf{q} \cdot \nabla \theta = 0 \hspace{5ex} (r=a(z) \, ).
+\end{equation}
+This condition is implemented via relaxation, as described in~\autoref{sec:free-boundary-method}.
+
+\section{Computational procedure}
+\label{sec:computational-procedure}
+
+
+\begin{figure}[ht]
+\captionsetup[subfigure]{position=top,singlelinecheck=off,justification=raggedright, aboveskip=-12pt,belowskip=12pt}
+\begin{subfigure}[t]{.48\linewidth}
+	\centering
+	\caption{}
+	\newlength\figureheight 
+	\newlength\figurewidth 
+	\setlength\figureheight{4cm} 
+	\setlength\figurewidth{6cm}
+	\input{heated-wire-error.tikz}
+	\label{subfig:heated-wire-error}
+\end{subfigure}
+\quad
+\captionsetup[subfigure]{aboveskip=-6pt}
+\begin{subfigure}[t]{.48\linewidth}
+	\centering
+	\caption{} 
+	%\includegraphics[width = \textwidth]{HRL-Nu-comparison}
+	\setlength\figureheight{4cm} 
+	\setlength\figurewidth{6cm}
+	\input{HRL-Nu-comparison.tikz}
+	\label{subfig:HRL-Nu-comparison}
+\end{subfigure}
+
+\caption{~\subref{subfig:heated-wire-error} The linear relationship between the average fractional error $\left<\Delta T/T_{analytic} \right>$ and $(\Delta r)^2$ is confirmation of a correctly implemented second order method.~\subref{subfig:HRL-Nu-comparison} The Horton-Rogers-Lapwood problem was solved as a further test of the code; here I plot Nu(Ra). The well documented onset of convection was observed at $4 \pi^2$, and the calculated values (blue crosses) were in good agreement with those of~\citet*{caltagirone-75} (red circles).}
+\label{fig:code-verification}
+\end{figure}
+
+The equations governing $\theta$ and $\psi$ within the mushy layer were solved using semi-implicit timestepping and second order finite differences in space on a fixed grid using iterative methods. The momentum equation~\eqref{eq:momentum-simplified} was solved by successive over-relaxation (SOR)~\citep*{young-50}, whilst the time dependent heat equation~\eqref{eq:heat-psi} was solved using an Alternating Direction Implicit (ADI) method~\citep*{peaceman-rachford-55} which ensures second order temporal accuracy. A steady state was deemed to have been reached once the condition
+\begin{equation}
+\text{max}\left( \frac{d\theta}{dt}, \frac{d\psi}{dt}, \frac{d a}{dt} \right) < 10^{-5}
+\end{equation}
+was satisfied. The mixed and Neumann boundary conditions were enforced using a Taylor expansion centered on the grid point adjacent to the boundary in order to maintain second order finite differencing. Further details of the numerical method can be found in ~\autoref{app:numerical-method}.
+
+The numerical method was implemented in MATLAB, and the code was written in stages of increasing complexity in order to verify its accuracy. Similarity solutions for an axisymmetric heated wire are presented in ~\citet*[Chapter~5.9]{nield-bejan-06}, using which I verified second order convergence of my code when solving the system
+\begin{eqnarray}
+&&(\psi_r/r)_r = -Rm \theta_r; \hspace{5ex} \psi_r \theta_z - \psi_z \theta_r = (r \theta_r)_r \\
+&&\theta = z \hspace{5ex} u_r = 0 \hspace{5ex} (r=a) \\
+&&\theta = 0 \hspace{5ex} u_z = 0 \hspace{5ex} (r=R)
+\end{eqnarray}
+as demonstrated in figure~\ref{subfig:heated-wire-error}.
+
+In order to test both the implementation of Neumann boundary conditions and the coupling of the heat and momentum equations, I also solved for convection in a 2-D planar porous layer heated from below~\citep*{horton-rogers-45,lapwood-48}. I observed the onset of convection at $Ra = 4 \pi^2$, and found my results for $Nu(Ra)$ to be in good agreement with those of~\citet*{caltagirone-75} over a wide range of $Ra$ (see figure~\ref{subfig:HRL-Nu-comparison}).
+
+Finally, once the full set of boundary conditions for flow with brine channels were applied, the steady state was checked to ensure both the interior equations and boundary conditions were satisfied.
+
+\subsection{Free boundaries}
+\label{sec:free-boundary-method}
+
+\begin{figure}[t!]
+\centering
+\captionsetup[subfigure]{position=top,singlelinecheck=off,justification=raggedright, aboveskip=-12pt,belowskip=12pt}
+\begin{subfigure}[t]{.48\linewidth}
+       	\centering
+       	 \caption{}
+       	%\includegraphics[width=\textwidth]{q-dot-grad-theta}
+       	\setlength\figureheight{5cm} 
+	\setlength\figurewidth{7cm}
+	\input{q-dot-grad-theta.tikz}
+       	\label{subfig:q-dot-grad-theta}
+\end{subfigure}
+\quad
+\captionsetup[subfigure]{aboveskip=-18pt}
+\begin{subfigure}[t]{.48\linewidth}
+       	\centering
+        	\caption{}
+      	% \includegraphics[width=\textwidth]{q-dot-grad-theta-root}
+      	\setlength\figureheight{5cm} 
+	\setlength\figurewidth{6.5cm}
+	\input{q-dot-grad-theta-root.tikz}
+    	\label{subfig:q-dot-grad-theta-root}
+\end{subfigure}
+\caption{~\subref{subfig:q-dot-grad-theta} Cross section of $\mathbf{q} \cdot \nabla \theta$, taken at $z=-2H/3$. The full curve is plotted in the top right corner, with the region in the dashed box magnified to produce the main plot. Dashed red lines are linear extrapolations from two points on the curve separated by $\Delta r = 0.04R$. The large variation in the roots of these extrapolations illustrates the sensitivity of this method, which makes it unfeasible.~\subref{subfig:q-dot-grad-theta-root} $ \left. \mathbf{q} \cdot \nabla \theta \right|_{r=a}$ calculated for steady state solutions with $a=b$. The negative gradient at the root $ \left. \mathbf{q} \cdot \nabla \theta \right|_{r=a} = 0$ motivates the implementation of the relaxation method~\eqref{eq:relaxation-q-dot-grad-theta}. }
+\label{fig:free-boundary-method}  
+
+\end{figure}
+
+Implementing the condition of marginal equilibrium~\eqref{eq:chimney-bc} at the chimney wall posed significant difficulty. I chose to apply it at $z = - 2H/3$ where the straight sided approximation should be most accurate; near the solid-mush boundary the chimney width is observed to decrease and may in fact disappear altogether, whilst the singularity at the mush-ocean boundary leads to unreliable values of $\theta$ and $\psi$ close to the bottom of the mushy layer. To enforce this condition, it is necessary to extrapolate from $r=b$ at each time step and then adjust $a$ appropriately. 
+
+A first attempt was made using a linear extrapolation for $f(r) = \mathbf{q} \cdot \nabla \theta$,
+\begin{equation}
+f(a) = f(b) + (a-b) \left. \frac{\partial f}{\partial r}\right|_b \, ,
+\end{equation}
+and solving for the root $f(a)=0$ to find a new estimate for the chimney width $a^*$. The chimney width $a(t)$ was then updated by relaxing towards $a^*$,
+\begin{equation}
+\frac{da}{dt} = \lambda (a - a^*),
+\end{equation}
+with constant $\lambda$. However this produced an unstable scheme in which the chimney width often became zero, as the extrapolation was highly sensitive to the position of $b$ on the $\mathbf{q} \cdot \nabla \theta$ curve (see figure~\ref{subfig:q-dot-grad-theta}).
+
+A more careful analysis revealed that, based on the form of $\psi$ and $\theta$ in the region $a < r < b$ derived in~\autoref{sec:patching-equations}, the Pad\'{e} approximation
+\begin{equation}
+\mathbf{q} \cdot \nabla \theta \approx \frac{c_1 r^3 + c_2 r^2 + c_3 r + c_4}{r}
+\end{equation}
+might be more appropriate for extrapolation, where $c_1, c_2, c_3$ and $c_4$ are fitted from data at the edge of the computational grid. However this too was found to be unstable, in this case due to the $1/r$ term causing the extrapolation to, in some cases, predict no roots at all. Removing the $1/r$ term and instead considering a quadratic function with $c_4=0$ was slightly more successful, but the predicted chimney widths $a^*$ were still highly dependant on the form of $\mathbf{q} \cdot \nabla \theta$ at $r=b$ and convergence to a steady state with chimneys could not be achieved.
+
+By fixing $a=b$ and finding steady states at a range of chimney widths, it was observed that $\left. \mathbf{q} \cdot \nabla \theta \right|_{r=a}$ approaches a root from above as $a$ increases (see figure~\ref{subfig:q-dot-grad-theta-root}). Therefore a new relaxation scheme was employed
+\begin{equation}
+\label{eq:relaxation-q-dot-grad-theta}
+\frac{da}{dt} = \lambda \left. \mathbf{q} \cdot \nabla \theta \right|_{r=a}
+\end{equation}
+where $\left. \mathbf{q} \cdot \nabla \theta \right|_{r=a}$ was calculated using a quadratic extrapolation from $r=b$, and the relaxation parameter $\lambda = 0.002$ was chosen empirically. Using this method it was possible to converge on a steady state with chimneys, so the description of the numerical scheme is complete.
+
+\begin{figure}[ht!]
+\centering
+\begin{subfigure}[t]{.48\linewidth}
+    \centering
+    %\includegraphics[width=0.9\textwidth]{steady-state-Rm60H0-25R0-25}
+   	\setlength\figureheight{5cm} 
+	\setlength\figurewidth{6.5cm}
+	\input{steady-state-darcy.tikz}
+    \caption{Streamlines in the reference frame of the solid phase}
+    \label{fig:steady-state-darcy}
+ \end{subfigure}
+ \quad
+ \begin{subfigure}[t]{.48\linewidth}
+    \centering
+    %\includegraphics[width=0.9\textwidth]{steady-state-Rm60H0-25R0-25-q}
+    \setlength\figureheight{5cm} 
+	\setlength\figurewidth{6.5cm}
+	\input{steady-state-q.tikz}
+    \caption{Streamlines in the laboratory reference frame}
+    \label{fig:steady-state-q}
+ \end{subfigure}
+    
+    \caption{Steady state temperature and flow fields for $Rm=60, R=0.25, H=0.25, Da=5\times10^{-5}$. Dashed black lines are contours of equal $\theta$, ranging from $\theta=-1$ at $z=0$ to $\theta=0$ at $z=-H$ in $0.1$ increments. Solid blue lines are streamlines [need to work out the range and interval of psi]. In figure (a) these are streamlines of the Darcy velocity $\mathbf{u}$, whilst in figure (b) they are calculated from $\mathbf{q} = \mathbf{u} + V \mathbf{\hat{z}}$. The red vertical line illustrates the position of the chimney wall, $a$.}
+    \label{fig:typical-steady-states}
+ \end{figure}
+
+\section{Numerical results and their interpretation}
+\label{sec:results}
+
+
+ 
+ 
+ 
+  \begin{figure}[ht!]
+\centering
+\begin{subfigure}[t]{.48\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{Rm-a-H0-25R0-34}
+    \caption{}
+    \label{fig:steady-state-Rm-a}
+ \end{subfigure}
+ \quad
+ \begin{subfigure}[t]{.48\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{Rm-flux-H0-25R0-34}
+    \caption{}
+    \label{fig:steady-state-Rm-flux}
+ \end{subfigure}
+\quad
+  \begin{subfigure}[t]{.48\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{Rm-theta-inf-H0-25R0-34}
+    \caption{}
+    \label{fig:steady-state-Rm-theta-inf}
+ \end{subfigure}
+  \quad
+ \begin{subfigure}[t]{.48\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{Rm-psi-H0-25R0-34}
+    \caption{}
+    \label{fig:steady-state-Rm-psi}
+ \end{subfigure}
+ 
+ \caption{Plots of (a) chimney width, (b) flux at the solid-mush boundary (c) $\theta_\infty$ and (d) $\psi_{max}$ as a function of $Rm$ for $R=0.25, H=0.34, Da=5\times10^{-5}$. Below $\text{Rm} = 47$ no steady states were found with non-zero $a$.}
+ \label{fig:parameter-plots}
+ \end{figure}
+
+
+
+Obtaining a stable numerical integration requires $(b-a) \ll a$. This makes finding steady states for arbitrary parameters challenging, as a very good first guess for $a$ is required. An initial steady state was found for the parameters $Rm = 60, R=0.25, H=0.25, Da=5\times 10^{-5}$ by bracketing a root of $\left. \mathbf{q} \cdot \nabla \theta \right|_{r=a} = 0$, and each parameter was then varied by small amounts ($\sim 1\%$ of their value) such that the previous value of $a$ was a good estimate for the new state. This allowed for a range of parameter space to be explored by parameter continuation.
+
+A typical steady state is shown in figure~\ref{fig:typical-steady-states}, where the solution has been extended into $0 \le r \le b$ using the approximate analytical solutions derived in~\autoref{sec:approximations}. The singularity resulting from the straight mush-ocean boundary can be clearly seen by its distorting effect on the extrapolated values in the chimney region. However the affected region is small relative to the whole domain, so should not affect the overall form of the solution. The parallel isotherms and streamlines at $(r, z) = (a, -2H/3)$ in figure~\ref{fig:steady-state-q} confirm that the condition $\left. \mathbf{q} \cdot \nabla \theta \right|_{r=a} = 0$, used to determine the position of the chimney wall, is indeed satisfied. Comparison between figures~\ref{fig:steady-state-darcy} and~\ref{fig:steady-state-q} illustrates the difference between viewing the system in a frame of reference fixed to the solid-mush boundary (a) and in laboratory frame (b) and. In the latter case, fluid flow enters the solid with vertical velocity $V$, the solidification rate (NOTE - currently can't get MATLAB to plot the streamlines that the leave mushy region into the solid, so figure~\ref{fig:steady-state-q} doesn't actually show this). Due to the (relatively) large Rayleigh number, these parameters are significantly different to those for which previous authors have produced similar plots making direct comparison of results difficult. However the general features are seen to be in good agreement with figure 5(c) from~\citet*{schulze-worster-98}.
+
+By varying $Rm$ at fixed $R$ and $H$~\cref{fig:steady-state-Rm-a,fig:steady-state-Rm-flux,fig:steady-state-Rm-theta-inf,fig:steady-state-Rm-psi} were produced. Fluxes at the solid-mush boundary, $F_s$, were found using the calculation described in~\cref{app:heat-flux} (NOTE: this graph doesn't seem right, need to check the calculation). I have not been able to continue the curves backwards beyond $\text{Rm} = 47$, where studies by previous authors suggest there should exist a set of unstable states forming the lower branch of a saddle point bifurcation~\citep*{schulze-worster-98,chung-worster-02}. Instead, the numerical method jumps to steady states with no chimney, $a=0$, which are not of interest. [Need to make more of an effort to see if I can get to the lower branch by reducing $Rm$ in smaller steps or decreasing $\Delta r$ before deciding it's impossible and offering possible explanations for why the model cannot get to it].
+
+\begin{figure}[hb!]
+ \begin{subfigure}[t]{.48\linewidth}
+   \centering
+   \includegraphics[width=0.8\textwidth]{R-H-psi-max}
+   \caption{}
+   \label{fig:R-H-psi-max}   
+\end{subfigure}
+\quad
+\begin{subfigure}[t]{.48\linewidth}
+   \centering
+   \includegraphics[width=0.8\textwidth]{R-H-theta-inf}
+   \caption{}
+   \label{fig:R-H-theta-inf}   
+\end{subfigure}
+
+\caption{Contour plot of (a) $\psi_{max}$ and (b) $\theta_\infty$ in the $R-H$ plane for $\text{Rm} = 60, Da=5\times10^{-5}$. Currently incomplete data.}
+\label{fig:R-H-contour}
+ 
+\end{figure} 
+[I would also like to investigate the dependence on $R$ of the Rayleigh number at which the chimney disappears, and produce some contour plots of $R-H$ space (e.g.~\cref{fig:R-H-contour}), but at the moment don't have enough data to draw any sensible conclusions]
+
+
+\section{Conclusion}
+\label{sec:conclusion}
+I have derived and solved a model for steady convection in an ideal mushy layer, using a two dimensional axisymmetric geometry with a periodic array of brine channels. Through a suitable choice of boundary conditions I avoided the computationally intensive problem of solving for the fluid flow in the ocean and the chimney. The governing equations within the mushy layer were simplified through a catalogue of assumptions which, most importantly, removed the dependence on permeability and decoupled the equations for conservation of heat and solute. Meanwhile the geometry was simplified by the assumption that the convection cell has straight edges. The free boundary problem for the chimney wall was solved using relaxation based on the condition derived by~\citet*{schulze-worster-99}. The equivalent problem for the mush-ocean interface was eliminated by fixing $H$ for each steady state, at the expense of relinquishing control over the parameter determining the far field temperature in the ocean, $\theta_\infty$.
+
+Despite the significant approximations imposed, the model still produces steady state temperature and velocity profiles in broad agreement with those published by other authors using more complex methods. Direct numerical comparison of results is made difficult by my choice of parameters, which were necessary in order to find converging solutions. 
+
+[Can't add any more specific details about the results and their consequences until I have them/have analysed them]
+
+The most significant source of error in the model is the flat boundary applied at the mush-ocean interface and consequent singularity at the point where this boundary meets the chimney. Applying a functional form for $H = H(r)$ that satisfies the boundary conditions on $\theta$, as~\citet*{schulze-worster-98} did in a planar geometry, would be a sensible next step to improve this model. Doing so would require the re-mapping of the domain in the vertical direction, but would produce more reliable numerical results for comparison with other studies.
+
+\newpage
+\bibliography{references}{}
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%             Appendix         %%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\appendix
+\label{appendix}
+
+\section{Numerical method}
+\label{app:numerical-method}
+To-do. \\
+More details on the ADI scheme, coupling of the equations, discretization, and a link to where the code can be found.
+
+\section{Heat flux}
+\label{app:heat-flux}
+The heat equation can be written
+\begin{equation}
+\frac{\partial \theta}{\partial t} + \nabla \cdot \left[ \mathbf{q} \theta - \nabla \theta \right] = 0
+\end{equation}
+so in steady state, using the divergence theorem,
+\begin{equation}
+\int_V \nabla \cdot \left[ \mathbf{q} \theta - \nabla \theta \right] dV = \oiint_S \left[ \mathbf{q} \theta - \nabla \theta \right] \cdot \mathbf{\hat{n}} \; dS = 0
+\end{equation}
+The net heat fluxes out of the convection cell balance. Furthermore, the boundary conditions ensure there is no heat flux from $r=0, R$.
+
+I am interested in the heat flux from the mush to the solid, at $z=0$, given by
+\begin{equation}
+F_{s} = \frac{1}{\pi R^2} \int_{r=0}^R \left( \mathbf{q}.\mathbf{n} \theta + \frac{\partial \theta}{\partial z} \right) 2 \pi r \; dr \hspace{5ex} (z=0)
+\end{equation}
+There is no normal flow at this boundary, $\theta=-1$ and $\mathbf{n} = \mathbf{\hat{z}}$. For $r<b$, I use the approximation $\left. \theta_z \right|_{r<b} = \left. \theta_z \right|_{r=b}$. Therefore
+\begin{equation}
+F_{s} = - 1  + \left( \frac{b}{R} \right)^2 \left.  \frac{\partial \theta}{\partial z} \right|_{r=b} + \frac{1}{\pi R^2} \int_{r=b}^R  \frac{\partial \theta}{\partial z}  2 \pi r \; dr
+\end{equation}
+The integral is carried out numerically with the MATLAB function \texttt{trapz}.
+
+
+
+
+\end{document}

@@ -1,0 +1,42 @@
+% This file was created by matlab2tikz.
+% Minimal pgfplots version: 1.3
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\tikzsetnextfilename{q-dot-grad-theta-root}
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=0.95092\figurewidth,
+height=\figureheight,
+at={(0\figurewidth,0\figureheight)},
+scale only axis,
+xmin=0.024,
+xmax=0.036,
+xlabel={$a=b$},
+ymin=-5,
+ymax=2,
+ylabel={$\left. \mathbf{q} \cdot \nabla \theta \right|_{r=a}$},
+%y label style={at={(0.05,0.67)}, rotate={-90}},
+y label style={rotate={-90}},
+scaled ticks=false, 
+tick label style={/pgf/number format/fixed},
+xtick pos=left,
+ytick pos=left,
+xtick={0.024, 0.03, 0.036},
+xticklabels = {$0.024$, $0.030$, $0.036$}
+]
+\addplot [color=black,solid,mark=x,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+0.035	-4.6008441465904\\
+0.034	-2.66613730542703\\
+0.032	0.112362347870441\\
+0.03	1.48690212339206\\
+0.028	1.80735604730586\\
+0.026	1.36595111461357\\
+0.024	0.472718367818018\\
+};
+\end{axis}
+\end{tikzpicture}%

@@ -1,0 +1,32 @@
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+ 
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{28 November 2014}
+\lhead{James Parkinson}
+ 
+\begin{document}
+ 
+\section*{MPhys Progress Report}
+I have spent Michaelmas working in parallel on the theoretical and computational parts of my project \textit{The seeds of “brinicles”: flow and pattern formation in sea ice and mushy layers} under the supervision of Dr Andrew Wells and Dr David Rees-Jones. \\
+
+On the theoretical side I have been reading through the existing literature on fluid flow in mushy layers, particularly the work of Worster, and deriving for myself the simplified equations that determine the balance of momentum and solute in such regions. This has involved justifying the many approximations via scale analysis, and confirming my results with that which has already published. In contrast to the earlier work of Worster (1997, 2002), and more in line with the current work of Rees-Jones and Wells (2013) I have been working in axisymmetry rather than cartesian co-ordinates. At the moment I have nearly finished deriving the set of 2D axisymmetric equations along with the relevant boundary conditions, the aim being to eventually formulate (and solve) the problem in 3 dimensions. \\
+
+Computationally, I have been building up the complexity of my model in order to more easily spot errors when they arise. Starting from simple one dimensional heat diffusion I have gradually added extra terms and dimensions, checking against known analytic solutions at each stage. I currently have code that appears (subject to further investigation of the convergence of the errors) to correctly solve the coupled partial differential equations
+\begin{eqnarray}
+\frac{\partial^2 \psi}{\partial x^2} + \frac{\partial^2 \psi}{\partial y^2} &=& \frac{g \beta K}{\nu} \frac{\partial T}{\partial y} \\
+\frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2} &=& \frac{1}{\alpha_m} \left( \sigma \frac{\partial T}{\partial t} + \frac{\partial \psi}{\partial y} \frac{\partial T}{\partial x} - \frac{\partial \psi}{\partial x} \frac{\partial T}{\partial y} \right)
+\end{eqnarray}
+which closely resemble the two dimensional axisymmetric problem I have derived theoretically:
+\begin{eqnarray}
+\frac{1}{r} \frac{\partial \psi}{\partial r}   - \frac{\partial^2 \psi}{\partial z^2} - \frac{\partial^2 \psi}{\partial r^2} &=& R_m \frac{\partial \theta}{\partial r} \\
+\nabla^2 \theta &=& \left(1 + \frac{S}{l} \right) (\mathbf{u} \cdot \nabla \theta - \theta_z )
+\end{eqnarray}
+ \\
+
+The next step is then to write an axisymmetric version of the code.
+
+\end{document}

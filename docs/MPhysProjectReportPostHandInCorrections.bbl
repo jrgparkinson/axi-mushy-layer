@@ -1,0 +1,154 @@
+\begin{thebibliography}{23}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[BBC(2011)]{frozen-planet-11}
+BBC.
+\newblock Frozen planet.
+\newblock Television, 2011.
+\newblock First broadcast at 21:00 GMT on Wednesday, 23 November 2011 on BBC
+  One.
+
+\bibitem[Brandon et~al.(2010)Brandon, Cottier, and Nilsen]{brandon-et-al-10}
+M.~A. Brandon, F.~R. Cottier, and F.~Nilsen.
+\newblock Sea ice and oceanography.
+\newblock In D.~N. Thomas and G.~S. Dieckmann, editors, \emph{Sea Ice}, pages
+  79--112. Wiley-Blackwell, 2010.
+
+\bibitem[Caltagirone(1975)]{caltagirone-75}
+J.~P. Caltagirone.
+\newblock Thermoconvective instabilities in a horizontal porous layer.
+\newblock \emph{J. Fluid Mech.}, 72\penalty0 (2):\penalty0 269--287, 1975.
+
+\bibitem[Chung and Worster(2002)]{chung-worster-02}
+C.~A. Chung and M.~G. Worster.
+\newblock Steady-state chimneys in a mushy layer.
+\newblock \emph{J. Fluid Mech.}, 455:\penalty0 387--411, 2002.
+
+\bibitem[Emms and Fowler(1994)]{emms-fowler-94}
+P.~W. Emms and A.~C. Fowler.
+\newblock Compositional convection in the solidification of binary alloys.
+\newblock \emph{J. Fluid Mech.}, 262:\penalty0 111--139, 1994.
+
+\bibitem[Fetterer et~al.({2002, updated daily})Fetterer, Knowles, Meier, and
+  Savoie]{fetterer-02}
+F.~Fetterer, K.~Knowles, W.~Meier, and M.~Savoie.
+\newblock Sea ice index.
+\newblock Digital media, {2002, updated daily}.
+\newblock Boulder, Colorado USA: National Snow and Ice Data Center.
+
+\bibitem[Hewitt(2014)]{hewitt-14}
+D.~R. Hewitt.
+\newblock \emph{High Rayleigh Number Convection in a Porous Medium}.
+\newblock PhD thesis, Department of Applied Mathematics and Theoretical
+  Physics, University of Cambridge, 2014.
+
+\bibitem[Horton and Rogers(1945)]{horton-rogers-45}
+C.~W. Horton and F.~T. Rogers.
+\newblock Convection currents in a porous medium.
+\newblock \emph{J. Appl. Phys.}, 16:\penalty0 367--370, 1945.
+
+\bibitem[Lapwood(1948)]{lapwood-48}
+E.~R. Lapwood.
+\newblock Convection of a fluid in a porous medium.
+\newblock \emph{Proc. Camb. Phil. Soc.}, 44:\penalty0 508--521, 1948.
+
+\bibitem[Nield and Bejan(2006)]{nield-bejan-06}
+D.A. Nield and A.~Bejan.
+\newblock \emph{Convection in Porous Media}.
+\newblock Springer-Verlag, 2006.
+
+\bibitem[Notz and Worster(2009)]{notz-worster-09}
+D.~Notz and M.G. Worster.
+\newblock Desalination processes of sea ice revisited.
+\newblock \emph{J. Geophys. Res.}, 114, 2009.
+\newblock \doi{10.1029/2008JC004885}.
+\newblock URL \url{http://dx.doi.org/10.1029/2008JC004885}.
+
+\bibitem[Peaceman and {Rachford Jr.}(1955)]{peaceman-rachford-55}
+D.~W. Peaceman and H.~H. {Rachford Jr.}
+\newblock The numerical solution of parabolic and elliptic differential
+  equations.
+\newblock \emph{Journal of the Society for Industrial and Applied Mathematics},
+  3\penalty0 (1):\penalty0 28--41, 1955.
+\newblock \doi{10.1137/0103003}.
+\newblock URL \url{http://dx.doi.org/10.1137/0103003}.
+
+\bibitem[Petrich and Eicken(2010)]{petrich-eicken-10}
+C.~Petrich and H.~Eicken.
+\newblock Growth, structure and properties of sea ice.
+\newblock In D.~N. Thomas and G.~S. Dieckmann, editors, \emph{Sea Ice}, pages
+  23--78. Wiley-Blackwell, 2010.
+
+\bibitem[{Rees Jones} and Worster(2013)]{rees-jones-worster-13}
+D.~W. {Rees Jones} and M.~G. Worster.
+\newblock Fluxes through steady chimneys in a mushy layer during binary alloy
+  solidification.
+\newblock \emph{J. Fluid Mech.}, 714:\penalty0 127–151, 2013.
+
+\bibitem[Schulze and Worster(1998)]{schulze-worster-98}
+T.~Schulze and M.~G. Worster.
+\newblock A numerical investigation of steady convection in mushy layers during
+  the directional solidification of binary alloys.
+\newblock \emph{J. Fluid Mech.}, 356:\penalty0 199--220, 1998.
+
+\bibitem[Schulze and Worster(1999)]{schulze-worster-99}
+T.~P. Schulze and M.~G. Worster.
+\newblock Weak convection, liquid inclusions and the formation of chimneys in
+  mushy layers.
+\newblock \emph{J. Fluid Mech.}, 388:\penalty0 197--215, 1999.
+
+\bibitem[Wells et~al.(2010)Wells, Wettlaufer, and Orzsag]{wells-et-al-10}
+A.~J. Wells, J.~S. Wettlaufer, and S.~A. Orzsag.
+\newblock Maximal potential energy transport: a variational principle for
+  solidification problems.
+\newblock \emph{Phys. Rev. Lett.}, 105, 2010.
+\newblock \doi{10.1103/PhysRevLett.105.254502}.
+\newblock URL \url{http://dx.doi.org/10.1103/PhysRevLett.105.254502}.
+
+\bibitem[Wells et~al.(2013)Wells, Wettlaufer, and Orzsag]{wells-et-al-13}
+A.~J. Wells, J.~S. Wettlaufer, and S.~A. Orzsag.
+\newblock Nonlinear mushy-layer convection with chimneys: stability and optimal
+  solute fluxes.
+\newblock \emph{J. Fluid Mech.}, 716:\penalty0 203--227, 2013.
+\newblock \doi{10.1017/jfm.2012.541}.
+\newblock URL \url{http://dx.doi.org/10.1017/jfm.2012.541}.
+
+\bibitem[Wettlaufer et~al.(1997)Wettlaufer, Worster, and
+  Huppert]{wettlaufer-et-al-97}
+J.~S. Wettlaufer, M.~G. Worster, and H.E. Huppert.
+\newblock Natural convection during solidification of an alloy from above with
+  application to the evolution of sea ice.
+\newblock \emph{J. Fluid Mech.}, 344:\penalty0 291–316, 1997.
+
+\bibitem[Wettlaufer et~al.(2000)Wettlaufer, Worster, and
+  Huppert]{wettlaufer-et-al-00}
+J.~S. Wettlaufer, M.~G. Worster, and H.E. Huppert.
+\newblock The solidification of leads: theory, experiment and field
+  observations.
+\newblock \emph{J. Geophys. Res.}, 105:\penalty0 1123--1134, 2000.
+
+\bibitem[Worster(1997)]{worster-97}
+M.~G. Worster.
+\newblock Convection in mushy layers.
+\newblock \emph{Annu. Rev. Fluid Mech.}, 29:\penalty0 91--122, 1997.
+
+\bibitem[Young(1950)]{young-50}
+D.~M. Young.
+\newblock \emph{Iterative methods for solving partial difference equations of
+  elliptical type}.
+\newblock PhD thesis, Harvard University, 1950.
+
+\bibitem[Zhong et~al.(2012)Zhong, Fragoso, Wells, and
+  Wettlaufer]{zhong-et-al-12}
+J.-Q. Zhong, A.~T. Fragoso, A.~J. Wells, and J.~S. Wettlaufer.
+\newblock {Finite-sample-size effects on convection in mushy layers}.
+\newblock \emph{Journal of Fluid Mechanics}, 704:\penalty0 89--108, July 2012.
+\newblock ISSN 0022-1120.
+\newblock \doi{10.1017/jfm.2012.219}.
+\newblock URL \url{http://journals.cambridge.org/abstract\_S0022112012002194}.
+
+\end{thebibliography}

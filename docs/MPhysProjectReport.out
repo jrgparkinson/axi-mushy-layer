@@ -1,0 +1,14 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Problem formulation}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Governing equations}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Non-dimensionalisation and scaling approximations}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{Boundary conditions}{section.2}% 5
+\BOOKMARK [3][-]{subsubsection.2.3.1}{The chimney}{subsection.2.3}% 6
+\BOOKMARK [2][-]{subsection.2.4}{Patching equations}{section.2}% 7
+\BOOKMARK [2][-]{subsection.2.5}{Free boundaries}{section.2}% 8
+\BOOKMARK [1][-]{section.3}{Computational procedure}{}% 9
+\BOOKMARK [2][-]{subsection.3.1}{Free boundaries}{section.3}% 10
+\BOOKMARK [1][-]{section.4}{Numerical results and their interpretation}{}% 11
+\BOOKMARK [1][-]{section.5}{Conclusion}{}% 12
+\BOOKMARK [1][-]{Appendix.1.A}{Appendix Numerical method}{}% 13
+\BOOKMARK [1][-]{Appendix.1.B}{Appendix Solute flux}{}% 14

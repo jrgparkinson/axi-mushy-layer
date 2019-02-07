@@ -1,0 +1,33 @@
+\documentclass{article}
+\usepackage[margin=0.2in]{geometry}
+\usepackage{amsmath}
+\usepackage{verbatim}
+
+\begin{document}
+
+\section{Calculating the average concentration across the chimney}
+Following Chung \& Worster (2002), find the weighted average of the concentration across the chimney
+\begin{eqnarray}
+\bar{C} = \frac{1}{\psi_q(a)} \int_0^{\psi_q} C(\psi_q)  \: d\psi_q
+\end{eqnarray}
+Using $\psi_q = \psi - \frac{1}{2} r^2$ and $\psi \approx \psi(r)$, it is possible to change variables
+\begin{eqnarray}
+\bar{C} &=& \frac{1}{\psi_q(a)} \int_0^{a} C(r) \frac{d}{dr} (\psi - \frac{1}{2} r^2) \: dr \\
+&=& \frac{1}{\psi_q(a)} \int_0^{a} C(r) (\psi_r - r) \: dr
+\end{eqnarray}
+To get an expression for $C(r)$, re-arrange the $z-$component of the Stokes equation
+\begin{eqnarray}
+\frac{1}{r} \frac{\partial}{\partial r} \left( r \frac{\partial}{\partial r} \left(\frac{1}{r} \psi_r \right) \right) &=& \frac{R_m}{D_a} \left( p_z + C \right) \\
+C &=& -p_z + \frac{D_a}{R_m} \frac{1}{r} \frac{\partial}{\partial r} \left( r \frac{\partial}{\partial r} \left(\frac{1}{r} \psi_r \right) \right)
+\end{eqnarray}
+where $p_z$ is constant across the chimney. The integral becomes
+\begin{eqnarray}
+\bar{C} &=&  \frac{1}{\psi_q(a)} \int_0^{a} \left[ -p_z + \frac{D_a}{R_m} \frac{1}{r} \frac{\partial}{\partial r} \left( r \frac{\partial}{\partial r} \left(\frac{1}{r} \psi_r \right) \right) \right] (\psi_r - r) \: dr \\
+&=& - \frac{1}{\psi_q(a)} \left[ p_z \left( \psi - \frac{1}{2} r^2 \right) \right]_0^a -             \frac{D_a}{\psi_q(a) R_m} \left[  r \frac{\partial}{\partial r} \left(\frac{1}{r} \psi_r \right) \right]_0^a +                    \frac{D_a}{\psi_q(a) R_m}  \int_0^{a} \frac{1}{r} \frac{\partial}{\partial r} \left( r \frac{\partial}{\partial r} \left(\frac{1}{r} \psi_r \right) \right) \psi_r \: dr \\
+&=& - \frac{p_z(a)}{\psi_q(a)} \left(\psi(a) - \frac{1}{2} a^2 \right)  -       \frac{D_a}{\psi_q(a) R_m} a \left. \frac{\partial}{\partial r} \left(\frac{1}{r} \psi_r \right)  \right|_{r=a}              + \frac{D_a}{\psi_q(a) R_m}  \int_0^{a} \frac{1}{r} \frac{\partial}{\partial r} \left( r \frac{\partial}{\partial r} \left(\frac{1}{r} \psi_r \right) \right) \psi_r \: dr \\
+&=& -p_z(a) -       \frac{D_a}{\psi_q(a) R_m}  \frac{1}{2} a^2 \frac{R_m}{D_a} (p_z(a) + C)               + \frac{D_a}{\psi_q(a) R_m}  \int_0^{a} \frac{1}{r} \frac{\partial}{\partial r} \left( r \frac{\partial}{\partial r} \left(\frac{1}{r} \psi_r \right) \right) \psi_r \: dr \\
+&=& -p_z(a) \left(1 + \frac{a^2}{2 \psi_q(a)}\right) -       \frac{a^2 }{2\psi_q(a) }  C              + \frac{D_a}{\psi_q(a) R_m}  \int_0^{a} \frac{1}{r} \frac{\partial}{\partial r} \left( r \frac{\partial}{\partial r} \left(\frac{1}{r} \psi_r \right) \right) \psi_r \: dr 
+\end{eqnarray}
+However the last integral cannot be done analytically (not, at least, according to Mathematica).
+
+\end{document}

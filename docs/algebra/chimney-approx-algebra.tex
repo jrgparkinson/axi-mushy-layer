@@ -1,0 +1,66 @@
+\documentclass{article}
+\usepackage[margin=0.2in]{geometry}
+\usepackage{amsmath}
+\usepackage{verbatim}
+
+\begin{document}
+
+\section{Eliminating the chimney boundary}
+
+The momentum equation is
+\begin{eqnarray}
+(\psi_r / r)_r  = \left\{
+  \begin{array}{lr}
+   \frac{r R_m}{2 D_a} (p_z + \Theta^*) & 0 < r < a\\
+   - R_m \theta_r   & a < r <  b
+  \end{array} \right.
+\end{eqnarray}
+And the jump conditions at $r=a$ are
+\begin{eqnarray}
+[\psi(a)] = 0 \hspace{6ex} [\psi_r(a)] = 0
+\end{eqnarray}
+I have already integrated this for $0 < r <a$, and found 
+\begin{eqnarray}
+\psi(a) &=& \frac{a^4}{16 Da} \left(\frac{\psi_r}{a} + R_m (\theta - \Theta^*) \right)   + \frac{1}{2} a \psi_r(a)
+\end{eqnarray}
+Integrating for $a < r < 2$ gives
+\begin{eqnarray}
+\psi_r  = -r R_m (\theta - A)
+\end{eqnarray}
+Where $A$ is an integration constant. To integrate again we make the 0th order approximation that $\theta(r) \approx \theta(b)$ for $a < r < b$ and find
+\begin{eqnarray}
+\psi_r(b) &=& - b R_m(\theta(b) - A) \implies A = \frac{1}{b R_m} \psi_r(b) + \theta(b) \\
+\psi_r(r) &=& \frac{r}{b} \psi_r(b) \\
+\psi(r) &=& \frac{r^2}{2 b} \psi_r(b) + B \\
+&=& \frac{1}{2} r \psi_r (r) + B
+\end{eqnarray}
+Applying the jump conditions, and using $\theta(r) \approx \theta(b) \implies \theta(a) \approx \theta(b)$ gives
+\begin{eqnarray}
+\psi^+(a) &=& \psi^-(a) \\
+\frac{1}{2} a \psi^+_r (a) + B &=& \frac{a^4}{16 Da} \left(\frac{\psi^-_r(a)}{a} + R_m (\theta(a) - \Theta^*) \right)   + \frac{1}{2} a \psi^-_r(a) \\
+&=& \frac{a^4}{16 Da} \left(\frac{\psi^+_r(a)}{a} + R_m (\theta(b) - \Theta^*) \right)   + \frac{1}{2} a \psi^+_r(a) \\
+B &=& \frac{a^4}{16 Da} \left(\frac{\psi_r(b)}{b} + R_m (\theta(b) - \Theta^*) \right) \\
+\psi^+(r) &=& \frac{1}{2} r \psi_r (r) + \frac{a^4}{16 Da} \left(\frac{\psi_r(b)}{b} + R_m (\theta(b) - \Theta^*) \right) \\
+\psi(b) &=&\frac{1}{2} b \psi_r (b) + \frac{a^4}{16 Da} \left(\frac{\psi_r(b)}{b} + R_m (\theta(b) - \Theta^*) \right) 
+\end{eqnarray}
+If we had instead made the 1st order approximation $\theta(r)=\theta(b)-(b-r)\theta_r(b)$ we would have found
+\begin{eqnarray}
+\psi_r(r) &=& - r R_m \left[ \theta(b)-(b-r)\theta_r(b) - A \right] \\
+\psi_r(b) &=& - b R_m (\theta(b) - A) \implies A = \theta(b) + \frac{\psi_r(b)}{R_m b} \\
+\psi_r(r) &=&  r  R_m \left[ (b-r)\theta_r(b)   +  \frac{\psi_r(b)}{R_m b} \right] \\
+\psi_r(r) &=& r \left[ R_m b \theta_r(b) + \frac{\psi_r(b)}{b} \right]  - r^2 R_m \theta_r(b) \\
+\psi(r) &=& \frac{1}{2} r^2 \left[ R_m b \theta_r(b) + \frac{\psi_r(b)}{b} \right] - \frac{1}{3} r^3 R_m \theta_r(b) + B \\
+&=& \frac{1}{2} r \psi_r(r) + \frac{1}{6} r^3 R_m \theta_r(b) + B
+\end{eqnarray}
+And then $\theta(a) \approx \theta(b) - (b-a) \theta_r(b)$ so
+\begin{eqnarray}
+\psi^+(a) &=& \psi^-(a) \\
+ \frac{1}{2} a \psi^+_r(a) + \frac{1}{6} a^3 R_m \theta_r(b) + B &=& \frac{a^4}{16 Da} \left(\frac{\psi^-_r(a)}{a} + R_m (\theta(a) - \Theta^*) \right)   + \frac{1}{2} a \psi^-_r(a) \\
+ \frac{1}{6} a^3 R_m \theta_r(b) + B &=& \frac{a^4}{16 Da}    \left(\frac{\psi^-_r(a)}{a} + R_m (\theta(a) - \Theta^*) \right) \\
+ B &=& \frac{a^4}{16 Da} \left( R_m \left[ (b-a) \theta_r(b) + \frac{\psi_r(b)}{R_m b} \right] + R_m  \left[ \theta(b) - (b-a) \theta_r(b) - \Theta^* \right] \right)  -  \frac{1}{6} a^3 R_m \theta_r(b) \\
+ &=& \frac{a^4 R_m}{16 Da} \left(  \frac{\psi_r(b)}{R_m b}  +   \theta(b) - \Theta^*  \right)  -  \frac{1}{6} a^3 R_m \theta_r(b)\\
+ \psi(r) &=& \frac{1}{2} r \psi_r(r) + \frac{1}{6} r^3 R_m \theta_r(b) + \frac{a^4 R_m}{16 Da} \left(  \frac{\psi_r(b)}{R_m b}  +   \theta(b) - \Theta^*  \right)  -  \frac{1}{6} a^3 R_m \theta_r(b) \\
+  \psi(b) &=& \frac{1}{2} b \psi_r(b) + \frac{a^4}{16 Da} \left(  \frac{\psi_r(b)}{b}  +   R_m \left[ \theta(b) - \Theta^* \right]  \right)  + \frac{1}{6} (b^3-a^3) R_m \theta_r(b) 
+\end{eqnarray}
+
+\end{document}

@@ -1,0 +1,9 @@
+Areas to explore:
+
+H < 0.25
+R > 0.35
+
+Rm <> 60 for (R,H) = (0.301, 0.25), (0.301, 0.298), (0.301, 0.35), (0.301, 0.4)
+
+
+Clarify what solid fraction is
