@@ -1,4 +1,4 @@
-  function [a_new, a_extrap] = extrapolate_a(r, z, t, a_n, constants, psi, theta, C_n)
+function [a_new, a_extrap] = extrapolate_a(r, z, t, a_n, constants, psi, theta, C_n)
 [dr, dz, ~, z_num] = meshGridProperties(r, z);
 [dt, ~] = gridProperties(t);
 
