@@ -14,16 +14,21 @@ if file_to_load
     load([pwd file_to_load])
 else
     
+    data_dir = fullfile(pwd, 'data');
+    
     % Try and find some existing data
     vars = filenameVars(constants, r_num);
-    filename = strcat('\data\mushyLayerPrevSteadyState',vars,'.mat');
+    filename = fullfile(data_dir, ['mushyLayerPrevSteadyState',vars,'.mat']);
     
     if exist([pwd filename], 'file')
         load([pwd filename]);
     else
         %Default option
         %load([pwd '\data\mushyLayerPrevSteadyStatePoints40Rm60H0.5R0.5b0.15.mat']);
-        load([pwd '\data\mushyLayerPrevSteadyStatePoints40Rm60H0.25R0.25a0.0325b0.0325.mat']);
+        restart_file = fullfile(data_dir, 'mushyLayerPrevSteadyStatePoints40Rm60H0.25R0.25a0.0325b0.0325.mat');
+        if exist(restart_file, 'file')
+            load(restart_file);
+        end
     end
 end
 
